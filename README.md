@@ -36,7 +36,7 @@ Without a rigorous Out-Of-Sample (OOS) test set, a model trained directly on pas
 
 🔹 Technical Rationale for Design Choices
 There are very specific technical reasons why advanced features like dynamic Walk-Forward or continuous Rolling Retraining have not been natively integrated into this library:
-The Computational Bottleneck: A true Walk-Forward or Rolling Retraining (retraining the model bar-by-bar or across rolling time blocks) requires repeating the entire training process—quantile calculation, matrix scanning, iterative tree construction—hundreds or thousands of times on massive historical datasets. Continuous retraining would immediately trigger an Execution Timeout error.
-Memory & Historical Data Architecture: Managing matrices and historical arrays carries strict performance constraints. Accessing past data from hundreds of bars while applying complex temporal slicing logic rapidly consumes the heap memory allocated for the script, slowing down or freezing the chart.
+1. The Computational Bottleneck: A true Walk-Forward or Rolling Retraining (retraining the model bar-by-bar or across rolling time blocks) requires repeating the entire training process—quantile calculation, matrix scanning, iterative tree construction—hundreds or thousands of times on massive historical datasets. Continuous retraining would immediately trigger an Execution Timeout error.
+2. Memory & Historical Data Architecture: Managing matrices and historical arrays carries strict performance constraints. Accessing past data from hundreds of bars while applying complex temporal slicing logic rapidly consumes the heap memory allocated for the script, slowing down or freezing the chart.
 
 More about this library on my TradingView profile: [https://www.tradingview.com/u/thequantscience/#published-scripts]
