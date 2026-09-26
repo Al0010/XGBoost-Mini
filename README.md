@@ -3,14 +3,14 @@ This advanced library implements a fully functional, optimized, and native XGBoo
 
 # 🔷 1. User-Defined Types (UDTs)
 The code leverages Pine Script v6 data structures to define the model architecture:
-XGBTreeDepth3: Represents a single weak learner with a fixed depth of 3 levels. It stores feature indices, split thresholds, information gains for each node, and the terminal leaf weights (w0 through w7) for all 8 possible leaf regions.
-XGBModel: Encapsulates the entire trained tree ensemble, the best recorded validation loss (best_val_loss), and the optimal number of trees to retain (best_tree_count).
+- XGBTreeDepth3: Represents a single weak learner with a fixed depth of 3 levels. It stores feature indices, split thresholds, information gains for each node, and the terminal leaf weights (w0 through w7) for all 8 possible leaf regions.
+- XGBModel: Encapsulates the entire trained tree ensemble, the best recorded validation loss (best_val_loss), and the optimal number of trees to retain (best_tree_count).
 SplitCandidate: An internal helper structure used to evaluate optimal split points during tree growth.
 
 # 🔷 2. Inference & Analysis Methods
-predict_tree: Traverses the depth-3 decision tree by sequentially evaluating feature values against stored thresholds until a terminal leaf node is reached.
-predict_probability: Aggregates the raw scores (logits) across all trees in the ensemble, applies the learning rate, and maps the final output to a logistic probability ranging from 0.0 to 1.0 via the Sigmoid function (including numerical protection against overflow/underflow).
-calculate_feature_importance: Computes relative feature importance (0.0 to 1.0) by aggregating the structural gain accumulated by each variable across the entire ensemble.
+- predict_tree: Traverses the depth-3 decision tree by sequentially evaluating feature values against stored thresholds until a terminal leaf node is reached.
+- predict_probability: Aggregates the raw scores (logits) across all trees in the ensemble, applies the learning rate, and maps the final output to a logistic probability ranging from 0.0 to 1.0 via the Sigmoid function (including numerical protection against overflow/underflow).
+-calculate_feature_importance: Computes relative feature importance (0.0 to 1.0) by aggregating the structural gain accumulated by each variable across the entire ensemble.
 
 # 🔷 3. Static Quantile Pre-Binning
 The find_split_subset_fast function and the initial training phase implement Static Quantile Pre-Binning: prior to boosting, historical feature values are sorted and binned into quantitative buckets. This dramatically accelerates the search for optimal split points during tree construction, significantly reducing computational overhead.
